@@ -1,0 +1,166 @@
+Customer churn is one of the most important criteria for a growing business to estimate. While it's not the happiest measure, it's a number that can give your company the hard verity about its customer retention. It's hard to measure success if you do not measure the ineluctable failures, too. With the speedy development of telecommunication assiduity, the service providers are inclined more towards expansion of the subscriber base. To meet the need of surviving in the competitive terrain, the retention of being customers has come a huge challenge. In the check done in the Telecom assiduity, it's stated that the cost of acquiring a new customer is far further that retaining the being one. Customer churn is the chance of customers that stopped using your company's product or service during a certain time frame. You can calculate churn rate by dividing the number of customers you lost during that time period-- say a quarter-- by the number of customers you had at the morning of that time period.
+
+For illustration, if you start your quarter with 400 customers and end with 380, your churn rate is 5 because you lost 5 of your customers.
+
+Likewise, we use machine literacy to prognosticate which customers are churn. This information can constrict down the list of reasons for churn that need a farther check.
+
+Problem Definition.
+
+The intention of this challenge is to construct a mannequin that can forestall the client churn.The reasoning of patron churn can range and would require area information in order to outline properly, alternatively some frequent ones are; lack of utilization of the product, negative carrier and higher fee someplace else. Regardless of the reasoning that can be unique for one of a kind industries, one aspect applies for each and every area is, it prices extra to accumulate new clients than it does to preserve current ones. This has a direct have an effect on on running fees and advertising and marketing budgets inside the company.
+
+Customer Churn is a difficult problem, given the range of reasons. While constructing Analytical models, the patron churn from the facts wishes to be balanced with client retention and patron satisfaction. Machine mastering strategies enable for enhancing predictive accuracy, enabling churn manipulate gadgets to reap greater insurance with low false advantageous rates.
+The first-class way to keep away from purchaser churn is to be aware of your customers, and the nice way to comprehend your patron is via historic and new purchaser data.
+
+In this article, we will go via some customer information and see how we can leverage statistics insights and predictive modeling in order to improve patron retention. In our analysis, we will use Python and range of Machine Learning algorithms for prediction.
+
+Data Analysis
+
+In this design, we've a dataset which has the details of the churn along with the client details. It also has the details of the TotalCharges on the base of where the churn occurs.
+The given dataset contains 7043 rows and 21 columns. The column names like Client ID, Gender of the client, term of the guests with the company, PhoneService, MultipleLines, InternetService, OnlineSecurity, DeviceProtection, Contract, PaperlessBilling, PaymentMethod, MonthlyCharges, TotalCharges,etc.
+The egregious con of this data set is reason for churn isn't available. Still, there are still some companies has the retention plans. The capability to work with what's available is pivotal for any company looking to transition into using data wisdom.
+
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 7043 entries, 0 to 7042
+Data columns (total 21 columns):
+ #   Column            Non-Null Count  Dtype  
+---  ------                  ------------------  -----  
+ 0   customerID        7043 non-null   object 
+ 1   gender            7043 non-null   object 
+ 2   SeniorCitizen     7043 non-null   int64  
+ 3   Partner           7043 non-null   object 
+ 4   Dependents        7043 non-null   object 
+ 5   tenure            7043 non-null   int64  
+ 6   PhoneService      7043 non-null   object 
+ 7   MultipleLines     7043 non-null   object 
+ 8   InternetService   7043 non-null   object 
+ 9   OnlineSecurity    7043 non-null   object 
+ 10  OnlineBackup      7043 non-null   object 
+ 11  DeviceProtection  7043 non-null   object 
+ 12  TechSupport       7043 non-null   object 
+ 13  StreamingTV       7043 non-null   object 
+ 14  StreamingMovies   7043 non-null   object 
+ 15  Contract          7043 non-null   object 
+ 16  PaperlessBilling  7043 non-null   object 
+ 17  PaymentMethod     7043 non-null   object 
+ 18  MonthlyCharges    7043 non-null   float64
+ 19  TotalCharges      7043 non-null   object 
+ 20  Churn             7043 non-null   object 
+dtypes: float64(1), int64(2), object(18)
+memory usage: 1.1+ MB
+
+Information about the data
+
+There are no columns which contain the null values.
+
+Exploratory data analysis
+
+Dependent variable: Exploratory data analysis was conducted starting with the dependent variable, Churn. There were 1869 Churn and 5174 not-Churn. 26.5% of the data were Churn while 73.5% were not Churn
+
+sns.countplot(x ='sex', data = data).
+Correlations among variables: 
+ Heatmap used to be plotted for variables with at least 0.5 Pearson’s correlation coefficient, together with the DependentVariables. Tenure of patron and contract had a correlation of 0.67. Probably due to the fact tenure of consumer and billing contract is correlated. Apart from that, there don’t appear to be many correlations in the data. There don’t appear to be multicollinearity issues besides possibly that all the important points are all correlated, and someway complete costs have accounted for them. 
+plt.figure(figsize=(10,15))
+sns.heatmap(data.corr(), annot=True)
+
+Visualizing variables:
+
+The cost of Churn differs throughout Monthly Charges of the customer. Through Visualization we are discovering that how our statistics is commonly distributed. Checking how the structured variables and unbiased variables are correlated.
+
+
+
+plt.figure(figsize=(20,25))
+plotnumber=1
+for column in data:
+    if plotnumber<=21:
+        ax=plt.subplot(7,3,plotnumber)
+        sns.distplot(data[column])
+        plt.xlabel(column,fontsize=20)
+        plotnumber+=1
+        plt.show()
+
+Pre-processing Pipeline
+
+Data preprocessing is a predominant step in computer studying to yield tremendously correct and insightful results. Greater the high-quality of data, the higher is the reliability of the produced results. Incomplete, noisy, and inconsistent data are the inherent nature of real-world datasets. Data preprocessing helps in growing the great of facts via filling in lacking incomplete data, smoothing noise, and resolving inconsistencies.
+
+1.Incomplete data : Appropriate data may not be persisted due to a misreading, or because of instrument blights and malfunctions. In this, the data is completed.
+2.Noisy data : can do for a number of reasons ( having incorrect point values). The instruments used for the data collection might be defective. Data entry may contain mortal or instrument crimes. Data transmission crimes might do as well.
+
+There are numerous stages involved in data preprocessing.
+
+Data cleaning attempts to attribute missing values, removing outliers from the dataset.
+Data integration  integrates data from a multitude of sources into a single data storehouse.
+Data transformation similar as normalization, may be applied. For illustration, normalization may ameliorate the delicacy and effectiveness of mining algorithms involving distance dimension.
+Data reduction can reduce the data size by dropping out spare features. Point selection and point birth ways can be used.
+
+Treating null values
+
+Sometimes there are positive columns which include the null cost used to point out lacking or unknown values or perhaps the cost doesn’t exist. In our dataset the null values are now not existing in columns.
+There are distinct approaches of changing null values from the dataset if null values occures, like fillna to change the null values however we are now not the usage of due to the fact our information has no null values.
+
+Converting labels into numeric
+
+In Machine learning, we generally deal with datasets which include a couple of labels in one or greater than one column. These labels can be in the shape of phrases or numbers. To make the information comprehensible or in human readable form, the training data is regularly labelled in words.
+
+In our data there are columns with categorical values. The columns like gender, Partner, Dependents, PhoneService, MultipleLines, InternetService, OnlineSecurity, OnlineBackup, DeviceProtection, TechSupport, StreamingTV, StreamingMovies, Contract, PaperlessBilling, PaymentMethod, TotalCharges, Churn. These columns have to be treated with one hot encoding or the marker encoder. The target variable churn has to convert by using marker encoder only.
+
+Label Encoder
+
+Label Encoder refers to converting the labels into numeric form so as to convert it into the machine readable form. Machine literacy algorithms can also decide in a better way on how those labels must be operated. It's an important preprocessing step for the structured dataset in supervised literacy.
+Label garbling in python can be imported from the Sklearn library. Sklearn provides a veritably effective tool for garbling. Label encoders render labels with a value between 0 andn_classes-1. but in our data I've completed manually.
+Building machine learning models
+For building machine learning models there are numerous models existing inner the Sklearn module.
+Sklearn offers two kinds of fashions i.e. regression and classification. Our dataset’s goal variable is to predict Preventing Customer Churn. So for this sort of hassle we use classification models.
+
+But earlier than becoming our dataset to its mannequin first we have to separate the predictor variable and the goal variable, then we ignore this variable to the train_test_split technique to create a random take a look at and teach subset.
+
+What is train_test_split, it is a characteristic in sklearn model determination for splitting data arrays into two subsets for training data and checking out data. With this function, you don’t want to divide the dataset manually. By default, sklearn train_test_split will make random partitions for the two subsets. However, you can additionally specify a random state for the operation. It offers 4 outputs x_train, x_test, y_train and y_test. The x_train and x_test incorporates the education and trying out predictor variables whilst y_train and y_test consists of the training and testing target variable.
+
+After performing train_test_split we have to select the models to pass the training variable.
+We can build as many models as we desire to examine the accuracy given via these models and to select the best mannequin amongst them.
+
+I have selected 2 models:
+
+1.Logistic Regression from sklearn.linear_model: 
+
+Logistic Regression fromsklearn.linear_model Logistic regression is a supervised learning classification algorithm used to prognosticate the probability of a target variable. The nature of target or dependent variable is double, which means there would be only two possible classes 1 ( stands for success/ yes) or 0 ( stands for failure/ no). Mathematically, a logistic regression model predicts P (Y = 1) as a function ofX. It's one of the simplest ML algorithms that can be used for colorful classification problems similar as spam discovery, Diabetes prediction, cancer detection etc.
+
+Accuracy=(true_positive+true_negative)/(true_positive+false_positive+false_negative+true_negative)
+Accuracy
+
+precision    recall  f1-score   support
+
+           0       0.67      0.55      0.60       482
+           1       0.84      0.90      0.87      1279
+
+    accuracy                           0.80      1761
+   macro avg       0.75      0.72      0.73      1761
+weighted avg       0.79      0.80      0.80      1761
+
+
+2.k-nearest neighbor algorithm  from sklearn.linear_model: 
+
+Supervised Learning :
+It is the learning the place the value or end result that we desire to predict is inside the training data (labeled data) and the cost which is in statistics that we choose to find out about is recognised as Target or Dependent Variable or Response Variable.
+
+All the different columns in the dataset are recognized as the Feature or Predictor Variable or Independent Variable.
+
+              precision    recall  f1-score   support
+
+           0       0.67      0.55      0.60       482
+           1       0.84      0.90      0.87      1279
+
+    accuracy                           0.80      1761
+   macro avg       0.75      0.72      0.73      1761
+weighted avg       0.79      0.80      0.80      1761
+
+Conclusion from models 
+
+N=1761	Predicted(yes)	Predicted(No)
+Actual(yes)	263	219
+Actual(No)	130	1149
+
+We got our best model i.e. Logistic Regression and KNN with the accuracy score of 80%. Here our model predicts 263 true positive churns out of 393 positive churn and 1149 true negative cases out of 1368 churn. 
+It predicts 130 false positive cases out of 393 positive churn and 219 false negative cases out of 1368 cases. It gives the f1 score of 60%.
+Out of those 1761 churn, the classifier predicted "yes" 393 times, and "no" 1368 times.
+
+In reality, 1279 customer churn does not happend because of customer retention process was successful, and 482 customer churn done because of their usage or some other reason.
